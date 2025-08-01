@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, TextField, Box, Button, Typography, styled } from '@mui/material';
 
 import { authenticateLogin, authenticateSignup } from '../../service/api';
+import { LoginDialogProps } from '../../types/interfaces';
 
 const Component = styled(DialogContent)`
     height: 70vh;
@@ -100,7 +101,7 @@ const accountInitialValues = {
     }
 }
 
-const LoginDialog = ({ open, setOpen, setAccount }) => {
+const LoginDialog = ({ open, setOpen, setAccount }: LoginDialogProps) => {
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues);
     const [error, showError] = useState(false);
@@ -110,11 +111,18 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
         showError(false);
     }, [login])
 
-    const onValueChange = (e) => {
+    interface InputChangeEvent {
+        target: {
+            name: string;
+            value: string;
+        };
+    }
+
+    const onValueChange = (e: InputChangeEvent): void => {
         setLogin({ ...login, [e.target.name]: e.target.value });
     }
 
-    const onInputChange = (e) => {
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
     }
 
